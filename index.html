@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROMPT GENERATOR BY MASS.AGUS</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Global CSS for the App */
+        :root {
+            /* Variables for theming, default is blue */
+            --main-bg-color: #0d1a26; /* Dark Blue */
+            --main-text-color: #ffffff;
+            --button-bg-color: #2a7aed;
+            --button-text-color: #ffffff;
+            --button-hover-bg-color: #1e66d4;
+        }
+
+        body {
+            background-color: var(--main-bg-color);
+            color: var(--main-text-color);
+            font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Hide inactive pages */
+        .page-content {
+            display: none;
+        }
+
+        /* Common Navigation Buttons */
+        .back-button, .settings-button {
+            background-color: var(--button-bg-color);
+            color: var(--button-text-color);
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-bottom: 20px;
+        }
+        .back-button:hover, .settings-button:hover {
+            background-color: var(--button-hover-bg-color);
+        }
+        
+        /* CSS for the Home Page */
+        #homePage {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 90vh;
+            text-align: center;
+        }
+        #homePage h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 40px;
+        }
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            max-width: 400px;
+        }
+        .option-button {
+            background-color: var(--button-bg-color);
+            color: var(--button-text-color);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 20px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+        .option-button:hover {
+            background-color: var(--button-hover-bg-color);
+            transform: scale(1.03);
+        }
+
+        /* CSS for the Settings Page */
+        #settingsPage {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        #settingsPage h2 {
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--main-text-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .theme-options button, .donate-button {
+            padding: 10px 15px;
+            margin: 5px;
+            border: 2px solid var(--main-text-color);
+            color: var(--main-text-color);
+            background-color: transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        .theme-options button:hover, .donate-button:hover {
+            background-color: var(--main-text-color);
+            color: var(--main-bg-color);
+        }
+        .donate-button {
+            display: inline-block;
+            text-decoration: none;
+            margin-top: 20px;
+            background-color: #4CAF50; /* Green color for donation */
+            border-color: #4CAF50;
+            color: white;
+        }
+        .donate-button:hover {
+            background-color: #45a049;
+            color: white;
+        }
+        
+        /* CSS for Page 2 to avoid conflicts */
+        #page2-container {
+            --bg-color: #202124;
+            --text-color: #e8eaed;
+            --input-bg-color: #3c4043;
+            --input-border-color: #5f6368;
+            --button-bg-color: #8ab4f8;
+            --button-text-color: #202124;
+            --container-bg-color: #2d2f33;
+            width: 100%;
+            max-width: 800px;
+            background-color: var(--container-bg-color);
+            color: var(--text-color);
+            padding: 25px 35px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        #page2-container h1 {
+            color: var(--text-color);
+        }
+        #page2-container input, #page2-container select, #page2-container textarea {
+            background-color: var(--input-bg-color);
+            color: var(--text-color);
+            border: 1px solid var(--input-border-color);
+        }
+        #page2-container .generate-button {
+             background-color: var(--button-bg-color);
+             color: var(--button-text-color);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="homePage" class="page-content">
+        <h1>PROMPT GENERATOR BY MASS.AGUS</h1>
+        <div class="options-container">
+            <button class="option-button" onclick="showPage('page1')">PROMPT VIDEO GENERATOR VEO3</button>
+            <button class="option-button" onclick="showPage('page2')">Generator Prompt Gambar AI</button>
+            <button class="option-button" onclick="showPage('settingsPage')">Seting</button>
+        </div>
+    </div>
+
+    <div id="page1" class="page-content">
+        <button class="back-button" onclick="showPage('homePage')">← Kembali ke Menu Utama</button>
+        <div id="root-page1"></div>
+        <script type="text/babel">
+            // --- DESTRUCTURING DARI OBJEK REACT & REACTDOM AGAR LEBIH MUDAH DIGUNAKAN ---
+            const { useState, useEffect } = React;
+            
+            // --- DATA PRESET KARAKTER ---
+            const characterPresets = [
+                { theme: "Detektif Cyberpunk", icon: "brain-circuit", data: { id: "Karakter_Jax_Neonoir", physical: "pria tangguh 40-an, wajah penuh bekas luka sibernerik, mata kanan berupa implan biru yang bersinar. Rambut hitam pendek disisir ke belakang.", clothing: "Mengenakan trench coat anti-hujan berteknologi tinggi di atas rompi balistik. Kerah bajunya tinggi menutupi leher.", style: "Cyberpunk, suasana malam hari di kota mega yang basah oleh hujan neon, pantulan cahaya di genangan air, high contrast, cinematic, difilmkan dengan lensa anamorphic." }},
+                { theme: "Penyihir Hutan Ajaib", icon: "tree-pine", data: { id: "Figur_Elara_PenjagaHutan", physical: "wanita muda dengan rambut panjang berwarna perak yang dihiasi bunga-bunga kecil. Matanya hijau zamrud dan kulitnya pucat dengan tato bercahaya samar di lengannya.", clothing: "Mengenakan jubah dari dedaunan dan lumut yang ditenun secara ajaib, gaun linen sederhana berwarna bumi, dan berjalan tanpa alas kaki.", style: "Fantasy, high fantasy, pencahayaan lembut magis (god rays) yang menembus kanopi hutan lebat, partikel debu peri beterbangan di udara, warna-warna vibrant." }},
+                { theme: "Jurnalis Foto Perang", icon: "user-round-search", data: { id: "Reporter_Malik_GarisDepan", physical: "pria 30-an dengan tatapan mata lelah namun fokus. Ada sedikit debu dan kotoran di wajahnya. Brewok tipis dan rambut acak-acakan.", clothing: "Mengenakan rompi pers multi-saku berwarna khaki di atas kemeja biru pudar, celana kargo, dan mengalungkan dua kamera dengan lensa berbeda.", style: "Photorealistic, gaya dokumenter, gritty, butiran film (film grain) yang natural, warna desaturated, handheld camera feel, difilmkan di zona konflik yang kering." }}
+            ];
+            
+            // --- KOMPONEN BANTUAN (HELPER COMPONENTS) ---
+            const Icon = ({ name, size = 16, className = '' }) => {
+                const iconSizeClass = `w-${size/4} h-${size/4}`;
+                return <i data-lucide={name} className={`${iconSizeClass} ${className}`}></i>;
+            };
+
+            const copyToClipboard = (text, setCopyState) => {
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    setCopyState('Tersalin!');
+                    setTimeout(() => setCopyState('Salin'), 2000);
+                } catch (err) {
+                    setCopyState('Gagal');
+                    setTimeout(() => setCopyState('Salin'), 2000);
+                }
+                document.body.removeChild(textArea);
+            };
+
+            const PromptDisplay = ({ title, prompt, icon }) => {
+                const [copyState, setCopyState] = useState('Salin');
+                useEffect(() => { lucide.createIcons(); });
+                if (!prompt) return null;
+                return (
+                    <div className="mt-6">
+                        <h3 className="text-lg font-semibold text-slate-300 flex items-center mb-2"><Icon name={icon} className="mr-2" /><span>{title}</span></h3>
+                        <div className="bg-slate-900/70 p-4 rounded-lg border border-slate-700 relative group">
+                            <p className="text-slate-300 font-mono text-sm whitespace-pre-wrap break-words">{prompt}</p>
+                            <button onClick={() => copyToClipboard(prompt, setCopyState)} className="absolute top-2 right-2 bg-indigo-600 text-white px-3 py-1 text-xs font-bold rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-indigo-500 flex items-center">
+                                <Icon name="copy" size={14} className="mr-1" />{copyState}
+                            </button>
+                        </div>
+                    </div>
+                );
+            };
+
+            const FormField = ({ id, label, placeholder, icon, value, onChange, type = "textarea", required = true }) => {
+                const InputComponent = type === 'textarea' ? 'textarea' : 'input';
+                useEffect(() => { lucide.createIcons(); });
+                return (
+                    <div>
+                        <label htmlFor={id} className="text-sm font-medium text-slate-400 flex items-center mb-2"><Icon name={icon} className="mr-2" /><span>{label}</span></label>
+                        <InputComponent id={id} name={id} rows="3" className="w-full bg-slate-700/50 border border-slate-600 rounded-md p-3 text-slate-200 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200" placeholder={placeholder} value={value} onChange={onChange} required={required} />
+                    </div>
+                );
+            };
+
+            // --- KOMPONEN UTAMA APLIKASI ---
+            const CharacterCreator = ({ onCharacterCreated }) => {
+                const [formData, setFormData] = useState({
+                    id: '', physical: '', clothing: '', style: '',
+                    initialScene: 'berdiri diam menatap kamera', dialogue: '', dialogueLanguage: 'Indonesia',
+                });
+                useEffect(() => { lucide.createIcons(); });
+                const handlePresetSelect = (presetData) => {
+                    setFormData(prev => ({ ...prev, ...presetData, dialogue: '', dialogueLanguage: 'Indonesia', }));
+                };
+                const handleChange = (e) => {
+                    const { name, value } = e.target;
+                    setFormData(prev => ({ ...prev, [name]: value }));
+                };
+                const handleSubmit = (e) => {
+                    e.preventDefault();
+                    const {id, physical, clothing, style, initialScene} = formData;
+                    if ([id, physical, clothing, style, initialScene].some(val => val.trim() === '')) {
+                        alert('Mohon isi semua kolom yang wajib (selain dialog).');
+                        return;
+                    }
+                    onCharacterCreated(formData);
+                };
+                return (
+                    <div className="p-6 sm:p-8">
+                        <h2 className="text-2xl font-bold text-center mb-1 text-white">Langkah 1: Buat Karakter & Adegan Awal</h2>
+                        <p className="text-center text-slate-400 mb-6">Definisikan karakter Anda, lengkap dengan aksi dan dialog pertamanya.</p>
+                        <div className="mb-8">
+                            <h3 className="text-lg font-semibold text-slate-300 flex items-center mb-3"><Icon name="wand-sparkles" className="mr-2 text-yellow-400" />Mulai dengan Preset Karakter</h3>
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                {characterPresets.map((preset) => (
+                                    <button key={preset.theme} onClick={() => handlePresetSelect(preset.data)} className="text-left p-3 bg-slate-700/60 rounded-lg hover:bg-slate-700 border border-slate-600 hover:border-indigo-500 transition-all duration-200">
+                                        <div className="flex items-center font-bold text-white mb-1"><Icon name={preset.icon} className="mr-2" /><span>{preset.theme}</span></div>
+                                        <p className="text-xs text-slate-400">{preset.data.id}</p>
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="border-t border-slate-700 mb-6"></div>
+                        <form onSubmit={handleSubmit} className="space-y-6">
+                            <FormField id="id" label="ID Unik Karakter" icon="user" placeholder="Contoh: Karakter_Arjuna_Digital" value={formData.id} onChange={handleChange} type="input" />
+                            <FormField id="physical" label="Deskripsi Fisik Detail" icon="palette" placeholder="Contoh: Pria 30-an, wajah tirus, mata coklat tajam..." value={formData.physical} onChange={handleChange} />
+                            <FormField id="clothing" label="Pakaian dan Aksesori" icon="shirt" placeholder="Contoh: Mengenakan jaket kulit usang..." value={formData.clothing} onChange={handleChange} />
+                            <FormField id="style" label="Gaya Artistik Visual" icon="film" placeholder="Contoh: Photorealistic, 8K, cinematic..." value={formData.style} onChange={handleChange} />
+                            <div className="border-t border-slate-600 my-6"></div>
+                            <h3 className="text-lg font-semibold text-slate-300 -mb-2">Adegan Awal</h3>
+                            <FormField id="initialScene" label="Aksi/Pose Awal" icon="clapperboard" placeholder="Contoh: sedang duduk di kursi, menatap ke luar jendela." value={formData.initialScene} onChange={handleChange} />
+                            <FormField id="dialogue" label="Dialog Awal (Opsional)" icon="message-square" placeholder="Contoh: 'Semuanya dimulai dari sini.'" value={formData.dialogue} onChange={handleChange} required={false} />
+                            <FormField id="dialogueLanguage" label="Bahasa Dialog Awal" icon="languages" placeholder="Contoh: Indonesia, Inggris" value={formData.dialogueLanguage} onChange={handleChange} type="input" required={false}/>
+                            <div className="pt-4">
+                                <button type="submit" className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center text-lg hover:from-indigo-500 hover:to-purple-500 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                                    <Icon name="file-plus" size={20} className="mr-2" />Hasilkan Master Prompt & Lanjutkan
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                );
+            };
+            
+            const SceneGenerator = ({ character, onReset }) => {
+                const [sceneData, setSceneData] = useState({ action: '', dialogue: '', dialogueLanguage: 'Indonesia' });
+                const [masterPrompt, setMasterPrompt] = useState('');
+                const [followUpPrompt, setFollowUpPrompt] = useState('');
+                useEffect(() => {
+                    let prompt = `Video of ${character.id}, seorang ${character.physical}. ${character.clothing}. Ia ${character.initialScene}.`;
+                    if (character.dialogue.trim() !== '') {
+                        prompt += ` Ia mengatakan, "${character.dialogue}" (dalam bahasa ${character.dialogueLanguage}).`;
+                    }
+                    prompt += ` Gaya visual: ${character.style}.`;
+                    setMasterPrompt(prompt);
+                    lucide.createIcons();
+                }, [character]);
+                const handleChange = (e) => {
+                    const { name, value } = e.target;
+                    setSceneData(prev => ({ ...prev, [name]: value }));
+                };
+                const handleGenerateScene = (e) => {
+                    e.preventDefault();
+                    if (sceneData.action.trim() === '') {
+                        alert('Mohon deskripsikan aksi atau adegan baru.');
+                        return;
+                    }
+                    let prompt = `Video of ${character.id}, ${sceneData.action}.`;
+                    if (sceneData.dialogue.trim() !== '') {
+                        prompt += ` Ia mengatakan, "${sceneData.dialogue}" (dalam bahasa ${sceneData.dialogueLanguage}).`;
+                    }
+                    prompt += ` Gaya visual konsisten dengan: ${character.style}.`;
+                    setFollowUpPrompt(prompt);
+                };
+                return (
+                    <div className="p-6 sm:p-8">
+                        <div className="flex justify-between items-start mb-4">
+                            <div>
+                                <h2 className="text-2xl font-bold text-white">Langkah 2: Buat Adegan Lanjutan</h2>
+                                <p className="text-slate-400">Gunakan karakter <span className="font-bold text-indigo-400">{character.id}</span> dalam skenario baru.</p>
+                            </div>
+                            <button onClick={onReset} className="bg-slate-700 text-slate-300 px-3 py-1 text-sm font-semibold rounded-md hover:bg-slate-600 transition-colors flex items-center shrink-0">
+                                <Icon name="rotate-ccw" size={14} className="mr-1.5" />Buat Karakter Baru
+                            </button>
+                        </div>
+                        <PromptDisplay title="Master Prompt (Dihasilkan dari Langkah 1)" prompt={masterPrompt} icon="file-plus" />
+                        <form onSubmit={handleGenerateScene} className="mt-8 space-y-6">
+                            <FormField id="action" label="Aksi atau Adegan Baru" icon="clapperboard" placeholder="Contoh: berjalan menyusuri gang yang ramai." value={sceneData.action} onChange={handleChange} />
+                            <FormField id="dialogue" label="Dialog Baru (Opsional)" icon="message-square" placeholder="Tulis dialog baru atau biarkan kosong." value={sceneData.dialogue} onChange={handleChange} required={false} />
+                            <FormField id="dialogueLanguage" label="Bahasa Dialog Baru" icon="languages" value={sceneData.dialogueLanguage} onChange={handleChange} type="input" required={false}/>
+                            <button type="submit" className="mt-4 w-full bg-gradient-to-r from-green-500 to-teal-500 text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center text-lg hover:from-green-400 hover:to-teal-400 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                                <Icon name="clapperboard" size={20} className="mr-2" />Hasilkan Prompt Adegan
+                            </button>
+                        </form>
+                        <PromptDisplay title="Prompt Adegan Lanjutan (Siap Pakai)" prompt={followUpPrompt} icon="clapperboard" />
+                    </div>
+                );
+            };
+
+            const App = () => {
+                const [activeCharacter, setActiveCharacter] = useState(null);
+                useEffect(() => { lucide.createIcons(); });
+                const handleCharacterCreated = (characterData) => setActiveCharacter(characterData);
+                const handleReset = () => setActiveCharacter(null);
+                return (
+                    <div className="w-full max-w-4xl mx-auto">
+                        <header className="text-center mb-8">
+                            <h1 className="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-600">
+                                Character Consistency Prompt Generator
+                            </h1>
+                            <p className="text-slate-400 mt-2 text-lg">Buat karakter konsisten dengan dialog untuk AI Video Generator.</p>
+                        </header>
+                        <main className="bg-slate-800/50 rounded-2xl shadow-2xl shadow-indigo-500/10 backdrop-blur-sm border border-slate-700">
+                            {activeCharacter ? (
+                                <SceneGenerator character={activeCharacter} onReset={handleReset} />
+                            ) : (
+                                <CharacterCreator onCharacterCreated={handleCharacterCreated} />
+                            )}
+                        </main>
+                        <footer className="text-center mt-8 text-slate-500 text-sm">
+                            <p>Didesain untuk alur kerja pembuatan karakter yang efisien.</p>
+                        </footer>
+                    </div>
+                );
+            };
+            
+            const container = document.getElementById('root-page1');
+            const root = ReactDOM.createRoot(container);
+            root.render(<App />);
+        </script>
+    </div>
+
+    <div id="page2" class="page-content" style="display: flex; justify-content: center;">
+        <div id="page2-container">
+            <button class="back-button" onclick="showPage('homePage')" style="background-color: var(--input-bg-color); color: var(--text-color); border: 1px solid var(--input-border-color);">← Kembali ke Menu Utama</button>
+            <h1>Generator Prompt Gambar AI</h1>
+            <form id="prompt-form">
+                <div class="form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="form-group full-width" style="display: flex; flex-direction: column; grid-column: 1 / -1;">
+                        <label for="subject">1. Subjek Utama</label>
+                        <input type="text" id="subject" name="subject" placeholder="Contoh: Seekor naga kristal raksasa, seorang astronot, sebuah kota fantasi melayang" style="width: 100%; box-sizing: border-box; border-radius: 8px; padding: 12px; font-size: 1em;">
+                    </div>
+                    <div class="form-group full-width" style="display: flex; flex-direction: column; grid-column: 1 / -1;">
+                        <label for="details">2. Detail Karakter / Objek</label>
+                        <textarea id="details" name="details" placeholder="Contoh: Sisik terbuat dari permata safir yang berkilauan, memakai helm retro dengan pantulan galaksi, arsitektur bergaya art nouveau dengan jembatan cahaya" style="min-height: 100px; resize: vertical; width: 100%; box-sizing: border-box; border-radius: 8px; padding: 12px; font-size: 1em;"></textarea>
+                    </div>
+                    <div class="form-group full-width" style="display: flex; flex-direction: column; grid-column: 1 / -1;">
+                        <label for="setting">3. Latar / Lingkungan</label>
+                        <textarea id="setting" name="setting" placeholder="Contoh: Di puncak gunung berapi yang aktif, melayang di nebula orion, di tengah hutan ajaib saat senja" style="min-height: 100px; resize: vertical; width: 100%; box-sizing: border-box; border-radius: 8px; padding: 12px; font-size: 1em;"></textarea>
+                    </div>
+                    <div class="form-group" style="display: flex; flex-direction: column;">
+                        <label for="art-style">4. Gaya Seni</label>
+                        <select id="art-style" name="art-style" style="width: 100%; box-sizing: border-box; border-radius: 8px; padding: 12px; font-size: 1em;">
+                            <option value="photorealistic" selected>Fotorealistis (Photorealistic)</option>
+                            <option value="digital art">Seni Digital (Digital Art)</option>
+                            <option value="oil painting">Lukisan Cat Minyak (Oil Painting)</option>
+                            <option value="watercolor">Lukisan Cat Air (Watercolor)</option>
+                            <option value="anime style">Gaya Anime</option>
+                            <option value="manga style">Gaya Manga Hitam-Putih</option>
+                            <option value="studio ghibli style">Gaya Studio Ghibli</option>
+                            <option value="3d render">3D Render</option>
+                            <option value="pixar style">Gaya Pixar</option>
+                            <option value="cyberpunk">Cyberpunk</option>
+                            <option value="steampunk">Steampunk</option>
+                            <option value="fantasy art">Seni Fantasi (Fantasy Art)</option>
+                            <option value="concept art">Seni Konsep (Concept Art)</option>
+                            <option value="isometric">Isometrik</option>
+                            <option value="pixel art">Pixel Art</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="display: flex; flex-direction: column;">
+                        <label for="lighting">5. Pencahayaan</label>
+                        <select id="lighting" name="lighting" style="width: 100%; box-sizing: border-box; border-radius: 8px; padding: 12px; font-size: 1em;">
+                            <option value="" selected>-- Otomatis --</option>
+                            <option value="cinematic lighting">Cahaya Sinematik (Cinematic Lighting)</option>
+                            <option value="dramatic lighting">Cahaya Dramatis</option>
+                            <option value="golden hour">Golden Hour (Cahaya Senja)</option>
+                            <option value="blue hour">Blue Hour (Cahaya Pagi/Sore)</option>
+                            <option value="soft light">Cahaya Lembut (Soft Light)</option>
+                            <option value="neon lighting">Cahaya Neon</option>
+                            <option value="studio lighting">Pencahayaan Studio</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="display: flex; flex-direction: column;">
+                        <label for="composition">6. Komposisi & Sudut Pandang</label>
+                        <select id="composition" name="composition" style="width: 100%; box-sizing: border-box; border-radius: 8px; padding: 12px; font-size: 1em;">
+                            <option value="" selected>-- Otomatis --</option>
+                            <option value="full body shot">Full Body Shot</option>
+                            <option value="medium shot">Medium Shot (Setengah Badan)</option>
+                            <option value="close-up shot">Close-up (Wajah)</option>
+                            <option value="extreme close-up">Extreme Close-up (Detail)</option>
+                            <option value="wide angle shot">Wide Angle Shot (Sudut Lebar)</option>
+                            <option value="low angle shot">Dari Bawah (Low Angle)</option>
+                            <option value="high angle shot">Dari Atas (High Angle)</option>
+                            <option value="dutch angle">Dutch Angle (Miring)</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="display: flex; flex-direction: column;">
+                        <label for="colors">7. Palet Warna</label>
+                        <input type="text" id="colors" name="colors" placeholder="Contoh: Warna-warni cerah, monokromatik, palet warna pastel" style="width: 100%; box-sizing: border-box; border-radius: 8px; padding: 12px; font-size: 1em;">
+                    </div>
+                    <div class="form-group full-width" style="display: flex; flex-direction: column; grid-column: 1 / -1;">
+                        <label for="aspect-ratio">8. Rasio Aspek (Aspect Ratio)</label>
+                        <select id="aspect-ratio" name="aspect-ratio" style="width: 100%; box-sizing: border-box; border-radius: 8px; padding: 12px; font-size: 1em;">
+                            <option value="16:9" selected>Lanskap (16:9)</option>
+                            <option value="1:1">Persegi (1:1)</option>
+                            <option value="9:16">Potret (9:16)</option>
+                            <option value="4:3">Klasik (4:3)</option>
+                            <option value="3:2">Fotografi (3:2)</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="generate-button" style="border: none; border-radius: 8px; padding: 15px; font-size: 1.1em; font-weight: bold; cursor: pointer; margin-top: 20px; width: 100%; transition: background-color 0.2s;">GENERATE PROMPT</button>
+            </form>
+            <div id="result-container" style="margin-top: 30px;">
+                <label for="outputPrompt">Prompt yang Dihasilkan:</label>
+                <textarea id="outputPrompt" readonly placeholder="Hasil prompt akan muncul di sini..." style="min-height: 120px; font-family: 'Courier New', Courier, monospace; background-color: #1e1e1e; border: 1px solid var(--input-border-color); width: 100%; box-sizing: border-box; border-radius: 8px; padding: 12px; font-size: 1em;"></textarea>
+                <button id="copy-button" class="copy-button" style="display: block; margin: 10px auto 0; padding: 8px 16px; background-color: #5f6368; color: var(--text-color); border: none; border-radius: 6px; cursor: pointer;">Salin Prompt</button>
+            </div>
+        </div>
+        <script>
+            document.getElementById('prompt-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const subject = document.getElementById('subject').value.trim();
+                const details = document.getElementById('details').value.trim();
+                const setting = document.getElementById('setting').value.trim();
+                const artStyle = document.getElementById('art-style').value;
+                const lighting = document.getElementById('lighting').value;
+                const composition = document.getElementById('composition').value;
+                const colors = document.getElementById('colors').value.trim();
+                const aspectRatio = document.getElementById('aspect-ratio').value;
+                let promptParts = [];
+                if (subject) {
+                    let fullSubject = subject;
+                    if (details) fullSubject += `, ${details}`;
+                    promptParts.push(fullSubject);
+                } else {
+                    document.getElementById('outputPrompt').value = 'Error: Subjek Utama harus diisi.';
+                    return;
+                }
+                if (setting) promptParts.push(`in ${setting}`);
+                if (composition) promptParts.push(composition);
+                if (lighting) promptParts.push(lighting);
+                if (colors) promptParts.push(`${colors} color palette`);
+                if (artStyle) promptParts.push(`in the style of ${artStyle}`);
+                let finalPrompt = promptParts.join(', ');
+                finalPrompt += ` --ar ${aspectRatio}`;
+                const outputElement = document.getElementById('outputPrompt');
+                outputElement.value = finalPrompt;
+                outputElement.style.height = 'auto';
+                outputElement.style.height = (outputElement.scrollHeight) + 'px';
+            });
+            document.getElementById('copy-button').addEventListener('click', function() {
+                const outputPrompt = document.getElementById('outputPrompt');
+                if(navigator.clipboard && outputPrompt.value) {
+                    navigator.clipboard.writeText(outputPrompt.value).then(() => {
+                        this.textContent = 'Berhasil Disalin!';
+                        setTimeout(() => { this.textContent = 'Salin Prompt'; }, 2000);
+                    }).catch(err => console.error('Gagal menyalin teks: ', err));
+                }
+            });
+        </script>
+    </div>
+
+    <div id="settingsPage" class="page-content">
+        <button class="back-button" onclick="showPage('homePage')">← Kembali ke Menu Utama</button>
+        <h2>Seting</h2>
+        
+        <div>
+            <h3>Pilihan Tema Background</h3>
+            <div class="theme-options">
+                <button onclick="changeTheme('biru')">Biru (Default)</button>
+                <button onclick="changeTheme('merah')">Merah</button>
+                <button onclick="changeTheme('putih')">Putih</button>
+                <button onclick="changeTheme('kuning')">Kuning</button>
+            </div>
+        </div>
+
+        <div style="margin-top: 40px;">
+            <h3>Support Kami</h3>
+            <p>Jika Anda menyukai aplikasi ini, pertimbangkan untuk mendukung developer.</p>
+            <a href="https://sociabuzz.com/agus76/support" target="_blank" class="donate-button">Donasi di Sociabuzz</a>
+        </div>
+    </div>
+
+
+    <script>
+        // Objek untuk menyimpan definisi tema
+        const themes = {
+            'biru': {
+                '--main-bg-color': '#0d1a26',
+                '--main-text-color': '#ffffff',
+                '--button-bg-color': '#2a7aed',
+                '--button-hover-bg-color': '#1e66d4',
+            },
+            'merah': {
+                '--main-bg-color': '#4d0f0f',
+                '--main-text-color': '#ffffff',
+                '--button-bg-color': '#d93636',
+                '--button-hover-bg-color': '#c22a2a',
+            },
+            'putih': {
+                '--main-bg-color': '#f0f0f0',
+                '--main-text-color': '#111111',
+                '--button-bg-color': '#444444',
+                '--button-hover-bg-color': '#222222',
+            },
+            'kuning': {
+                '--main-bg-color': '#fffbe6',
+                '--main-text-color': '#5c4500',
+                '--button-bg-color': '#ffc107',
+                '--button-hover-bg-color': '#e0a800',
+            }
+        };
+
+        // Fungsi untuk menampilkan halaman yang dipilih
+        function showPage(pageId) {
+            // Sembunyikan semua halaman
+            document.querySelectorAll('.page-content').forEach(page => {
+                page.style.display = 'none';
+            });
+            // Tampilkan halaman yang diminta
+            const activePage = document.getElementById(pageId);
+            if (activePage) {
+                // Gunakan flex untuk halaman utama dan halaman 2 agar konten bisa di tengah
+                if (pageId === 'homePage' || pageId === 'page2') {
+                    activePage.style.display = 'flex';
+                } else {
+                    activePage.style.display = 'block';
+                }
+            }
+
+            // Panggil createIcons dari Lucide setiap kali berganti halaman
+            // untuk memastikan ikon selalu dirender
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        }
+        
+        // Fungsi untuk mengganti tema
+        function changeTheme(themeName) {
+            const theme = themes[themeName];
+            if (!theme) return;
+
+            // Terapkan properti CSS
+            for (const [key, value] of Object.entries(theme)) {
+                document.documentElement.style.setProperty(key, value);
+            }
+
+            // Simpan pilihan tema di localStorage
+            localStorage.setItem('appTheme', themeName);
+        }
+
+        // Jalankan saat halaman pertama kali dimuat
+        document.addEventListener('DOMContentLoaded', () => {
+            // Cek apakah ada tema yang tersimpan
+            const savedTheme = localStorage.getItem('appTheme') || 'biru';
+            changeTheme(savedTheme);
+
+            // Tampilkan halaman utama
+            showPage('homePage');
+        });
+    </script>
+
+</body>
+</html>
